@@ -193,19 +193,14 @@ resource "aws_route53_record" "root" {
   }
 }
 
-resource "aws_db_instance" "db_instance" {
-  allocated_storage = 20
-  # This allows any minor version within the major engine_version
-  # defined below, but will also result in allowing AWS to auto
-  # upgrade the minor version of your DB. This may be too risky
-  # in a real production environment.
-  auto_minor_version_upgrade = true
-  storage_type               = "standard"
-  engine                     = "postgres"
-  engine_version             = "12"
-  instance_class             = "db.t2.micro"
-  name                       = "mydb"
-  username                   = "foo"
-  password                   = "foobarbaz"
-  skip_final_snapshot        = true
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  db_name              = "mydb"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  username             = "foo"
+  password             = "foobarbaz"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
 }
