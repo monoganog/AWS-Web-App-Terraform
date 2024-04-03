@@ -14,7 +14,7 @@ provider "aws" {
 resource "aws_instance" "instance_1" {
   ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // 
   instance_type   = "t2.micro"
-  security_groups = [aws_security_group.instances.name]
+  security_groups = [aws_security_group2.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
               echo "Hello, ACME Corp 1 AWS" > index.html
@@ -25,7 +25,7 @@ resource "aws_instance" "instance_1" {
 resource "aws_instance" "instance_2" {
   ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // 
   instance_type   = "t2.micro"
-  security_groups = [aws_security_group.instances.name]
+  security_groups = [aws_security_group2.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
               echo "Hello, World 2" > index.html
@@ -62,13 +62,13 @@ data "aws_subnet_ids" "default_subnet" {
   vpc_id = data.aws_vpc.default_vpc.id
 }
 
-resource "aws_security_group" "instances" {
+resource "aws_security_group2" "instances" {
   name = "instance-security-group"
 }
 
-resource "aws_security_group_rule" "allow_http_inbound" {
+resource "aws_security_group_rule2" "allow_http_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.instances.id
+  security_group_id = aws_security_group2.instances.id
 
   from_port   = 8080
   to_port     = 8080
@@ -141,13 +141,13 @@ resource "aws_lb_listener_rule" "instances" {
 }
 
 
-resource "aws_security_group" "alb" {
-  name = "alb-security-group"
+resource "aws_security_group2" "alb" {
+  name = "alb-security-group2"
 }
 
-resource "aws_security_group_rule" "allow_alb_http_inbound" {
+resource "aws_security_group_rule2" "allow_alb_http_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.alb.id
+  security_group_id = aws_security_group2.alb.id
 
   from_port   = 80
   to_port     = 80
@@ -156,9 +156,9 @@ resource "aws_security_group_rule" "allow_alb_http_inbound" {
 
 }
 
-resource "aws_security_group_rule" "allow_alb_all_outbound" {
+resource "aws_security_group_rule2" "allow_alb_all_outbound" {
   type              = "egress"
-  security_group_id = aws_security_group.alb.id
+  security_group_id = aws_security_group2.alb.id
 
   from_port   = 0
   to_port     = 0
@@ -172,7 +172,7 @@ resource "aws_lb" "load_balancer" {
   name               = "web-app-lb"
   load_balancer_type = "application"
   subnets            = data.aws_subnet_ids.default_subnet.ids
-  security_groups    = [aws_security_group.alb.id]
+  security_groups    = [aws_security_group2.alb.id]
 
 }
 
