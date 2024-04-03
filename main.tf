@@ -63,7 +63,7 @@ data "aws_subnet_ids" "default_subnet" {
 }
 
 resource "aws_security_group" "instances" {
-  name = "instance-security-group"
+  name = "instance-security-group2"
 }
 
 resource "aws_security_group_rule" "allow_http_inbound" {
