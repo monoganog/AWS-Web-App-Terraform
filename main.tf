@@ -12,18 +12,18 @@ provider "aws" {
 }
 
 resource "aws_instance" "instance_1" {
-  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
+  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // 
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
-              echo "Hello, World 1 AWS" > index.html
+              echo "Hello, ACME Corp 1 AWS" > index.html
               python3 -m http.server 8080 &
               EOF
 }
 
 resource "aws_instance" "instance_2" {
-  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
+  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // 
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
@@ -177,12 +177,12 @@ resource "aws_lb" "load_balancer" {
 }
 
 resource "aws_route53_zone" "primary" {
-  name = "devopsdeployed.com"
+  name = "tf-tutorial-am.site"
 }
 
 resource "aws_route53_record" "root" {
   zone_id = aws_route53_zone.primary.zone_id
-  name    = "devopsdeployed.com"
+  name    = "tf-tutorial-am.site"
   type    = "A"
 
   alias {
