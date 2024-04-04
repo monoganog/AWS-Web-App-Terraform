@@ -28,7 +28,7 @@ resource "aws_instance" "instance_2" {
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
-              echo "Hello, World 2222345" > index.html
+              echo "Hello, World 22223453" > index.html
               python3 -m http.server 8080 &
               EOF
 }
