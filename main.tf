@@ -54,10 +54,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_crypto_con
   }
 }
 
-data "aws_subnet_ids" "default_subnet" {
-  vpc_id = data.aws_vpc.default_vpc.id
-}
-
 resource "aws_security_group" "instances" {
   name = "instance-security-group2"
 }
@@ -88,23 +84,6 @@ resource "aws_lb_listener" "http" {
       message_body = "404: page not found"
       status_code  = 404
     }
-  }
-}
-
-resource "aws_lb_target_group" "instances" {
-  name     = "example-target-group"
-  port     = 8080
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default_vpc.id
-
-  health_check {
-    path                = "/"
-    protocol            = "HTTP"
-    matcher             = "200"
-    interval            = 15
-    timeout             = 3
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
   }
 }
 
